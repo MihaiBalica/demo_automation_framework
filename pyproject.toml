@@ -1,0 +1,75 @@
+[project]
+name = "demo-automation-framework"
+version = "0.0.1"
+description = "QA Automation Framework for Swag Labs & JSONPlaceholder"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "allure-pytest>=2.13.5",
+    "playwright>=1.49.1",
+    "pydantic>=2.10.6",
+    "pytest>=8.3.4",
+    "pytest-html>=4.1.1",
+    "pytest-playwright>=0.6.2",
+    "pytest-xdist>=3.8.0",
+    "requests>=2.32.3",
+]
+
+[dependency-groups]
+dev = [
+    "pre-commit>=4.5.0",
+    "pyright>=1.1.400",
+    "ruff>=0.15.0",
+]
+
+# ---------------------------------------------------------------------------
+# pytest
+# ---------------------------------------------------------------------------
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "--alluredir=allure-results"
+markers = [
+    "ui: UI tests for Swag Labs",
+    "api: API tests for JSONPlaceholder",
+]
+log_cli = true
+log_cli_level = "INFO"
+log_cli_format = "%(asctime)s [%(levelname)s] %(name)s: %(message)s"
+log_cli_date_format = "%Y-%m-%d %H:%M:%S"
+
+# ---------------------------------------------------------------------------
+# ruff — linter & formatter
+# ---------------------------------------------------------------------------
+[tool.ruff]
+target-version = "py311"
+line-length = 120
+
+[tool.ruff.lint]
+select = [
+    "E",   # pycodestyle errors
+    "W",   # pycodestyle warnings
+    "F",   # pyflakes
+    "I",   # isort
+    "N",   # pep8-naming
+    "UP",  # pyupgrade
+    "B",   # flake8-bugbear
+    "SIM", # flake8-simplify
+    "RUF", # Ruff-specific rules
+]
+ignore = [
+    "N815",  # mixedCase variable in class scope — Pydantic models use camelCase field names
+]
+
+[tool.ruff.lint.isort]
+known-first-party = ["src"]
+
+# ---------------------------------------------------------------------------
+# pyright — static type checker
+# ---------------------------------------------------------------------------
+[tool.pyright]
+pythonVersion = "3.11"
+typeCheckingMode = "basic"
+include = ["src", "tests"]
+exclude = ["**/__pycache__"]
+reportMissingImports = true
+reportMissingTypeStubs = false
