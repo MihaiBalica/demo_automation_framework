@@ -13,8 +13,8 @@
       "username": "locked_out_user",
       "password": "secret_sauce"
     },
-    "problem_user": {
-      "username": "problem_user",
+    "invalid_user": {
+      "username": "invalid_user",
       "password": "secret_sauce"
     }
   }
