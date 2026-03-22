@@ -24,7 +24,7 @@ cd demo_automation_framework
 ```bash
 uv sync --all-groups
 
-# optional, to make sure virtual env was created. It should display the path to project + '/.env' 
+# optional, to make sure virtual env was created. It should display the path to project + '/.env'
 uv run python -c "import sys; print(sys.prefix)"
 
 ```
@@ -174,14 +174,13 @@ The `.pre-commit-config.yaml` runs the following on every commit:
 |---|----------|---------------|---------|
 | 1 | Successful login with valid credentials | Authentication | Critical |
 | 2 | Failed login with invalid credentials | Authentication | Critical |
-| 3 | Locked out user sees error | Authentication | Normal |
-| 4 | Add a product to the shopping cart | Shopping Cart | Critical |
-| 5 | Remove a product from the shopping cart | Shopping Cart | Critical |
-| 6 | Cart badge count is updated correctly | Shopping Cart | Normal |
-| 7 | Complete checkout process (end-to-end) | Checkout | Blocker |
-| 8 | Sort products by price (low to high) | Product Catalogue | Minor |
-| 9 | Sort products by price (high to low) | Product Catalogue | Minor |
-| 10 | Sort products by name (A to Z) | Product Catalogue | Minor |
+| 3 | Add a product to the shopping cart | Shopping Cart | Critical |
+| 4 | Remove a product from the shopping cart | Shopping Cart | Critical |
+| 5 | Cart badge count is updated correctly | Shopping Cart | Normal |
+| 6 | Complete checkout process (end-to-end) | Checkout | Blocker |
+| 7 | Sort products by price (low to high) | Product Catalogue | Minor |
+| 8 | Sort products by price (high to low) | Product Catalogue | Minor |
+| 9 | Sort products by name (A to Z) | Product Catalogue | Minor |
 
 ### API Tests (JSONPlaceholder)
 
@@ -208,12 +207,50 @@ The `.pre-commit-config.yaml` runs the following on every commit:
 
 The GitHub Actions workflow (`.github/workflows/tests.yml`) runs automatically on every push and pull request to the `main` branch. It contains two jobs:
 
-1. **Lint & Type-check** — runs `ruff check`, `ruff format --check`, and `pyright` using `uv`
-2. **Tests** — runs all API and UI tests (after linting passes)
+1. **Run code lintersk** — runs `ruff check`, `ruff format --check`, and `pyright` using `uv`
+2. **Run UI tests with Allure reports** — runs UI tests (after linting passes)
+3. **Run API tests with Allure reports** — runs API tests (after linting passes)
+
+UI and API tests are run in parallel
 
 Both jobs use [uv](https://docs.astral.sh/uv/) for fast, reproducible dependency installation.
 
-Two artifacts are uploaded after each test run:
+Artifacts are uploaded after each test run:
 
 - **`allure-results`** — raw JSON result files; download and run `allure serve` locally to view the interactive report
-- **`html-reports`** — self-contained HTML files for quick online viewing
+
+## Project Structure
+
+```txt
+demo_automation_framework/
+├── README.md
+├── pyproject.toml                           # Project config (deps, ruff, pyright, pytest)
+├── .pre-commit-config.yaml                  # Pre-commit hook definitions
+├── .github/
+│   └── workflows/
+│       └── tests.yml                        # GitHub Actions CI/CD pipeline
+├── config/
+│   └── settings.json                        # Externalized config (URLs, timeouts, credentials)
+├── src/
+|   |── ui
+│   |   ├── pages/                           # Page Object Model classes for Swag Labs
+│   │   │   ├── base_page.py                 # Base page with shared helpers
+│   │   │   ├── login_page.py                # Login page object
+│   │   │   ├── inventory_page.py            # Products/inventory page object
+│   │   │   ├── cart_page.py                 # Shopping cart page object
+│   │   │   └── checkout_page.py             # Checkout flow page objects
+│   │   └── utils/
+│   │       └── helpers.py                   # load_config(), get_credentials()
+│   └── api/
+|       ├── models/
+│       │   └── post.py                      # Pydantic models (Post, PostCreate, PostUpdate)
+│       └── json_placeholder_api_client.py   # HTTP client for JSONPlaceholder API
+├── tests/
+│   ├── conftest.py                          # Shared fixtures + pytest_runtest_makereport hook
+│   ├── ui/
+│   │   ├── conftest.py                      # Screenshot-on-failure autouse fixture
+│   │   └── test_ui.py                       # UI tests (allure GWT)
+│   └── api/
+│       └── test_json_placeholder_api.py     # API tests (allure GWT + Pydantic)
+└── .gitignore
+```
