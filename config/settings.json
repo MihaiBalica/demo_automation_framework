@@ -1,0 +1,21 @@
+{
+  "base_url": "https://www.saucedemo.com",
+  "api_base_url": "https://jsonplaceholder.typicode.com",
+  "browser": "chromium",
+  "headless": true,
+  "timeout": 15000,
+  "credentials": {
+    "standard_user": {
+      "username": "standard_user",
+      "password": "secret_sauce"
+    },
+    "locked_out_user": {
+      "username": "locked_out_user",
+      "password": "secret_sauce"
+    },
+    "invalid_user": {
+      "username": "invalid_user",
+      "password": "secret_sauce"
+    }
+  }
+}
