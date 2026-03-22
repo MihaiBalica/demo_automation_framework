@@ -3,10 +3,10 @@
 import allure
 import pytest
 
-from src.pages.cart_page import CartPage
-from src.pages.checkout_page import CheckoutCompletePage, CheckoutStepOnePage, CheckoutStepTwoPage
-from src.pages.inventory_page import ProductInventoryPage
-from src.pages.login_page import LoginPage
+from src.ui.pages.cart_page import CartPage
+from src.ui.pages.checkout_page import CheckoutCompletePage, CheckoutStepOnePage, CheckoutStepTwoPage
+from src.ui.pages.inventory_page import ProductInventoryPage
+from src.ui.pages.login_page import LoginPage
 from tests.ui.conftest import attach_screenshot
 
 PRODUCT_NAME = "Sauce Labs Backpack"

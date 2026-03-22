@@ -24,3 +24,5 @@ repos:
           - pytest
           - allure-pytest
           - playwright
+          - requests
+          - pydantic

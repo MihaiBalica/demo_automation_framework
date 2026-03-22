@@ -212,3 +212,6 @@ allure-report/
 
 # UV stuff
 uv.lock
+
+# vscode settings
+.vscode/

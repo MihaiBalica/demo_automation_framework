@@ -6,7 +6,7 @@ import logging
 
 from playwright.sync_api import Page
 
-from src.pages.base_page import BasePage
+from src.ui.pages.base_page import BasePage
 
 logger = logging.getLogger(__name__)
 

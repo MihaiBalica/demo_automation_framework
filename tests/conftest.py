@@ -7,7 +7,7 @@ import logging
 import pytest
 from playwright.sync_api import sync_playwright
 
-from src.utils.helpers import get_credentials, load_config
+from src.ui.utils.helpers import get_credentials, load_config
 
 logger = logging.getLogger(__name__)
 
@@ -58,7 +58,7 @@ def page(browser_context):
 @pytest.fixture(scope="function")
 def logged_in_page(page, config):
     """Provide a page already logged in as standard_user."""
-    from src.pages.login_page import LoginPage
+    from src.ui.pages.login_page import LoginPage
 
     logger.info("Setting up logged-in page for standard_user")
     login_page = LoginPage(page)

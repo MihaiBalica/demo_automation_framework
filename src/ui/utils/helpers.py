@@ -10,7 +10,9 @@ logger = logging.getLogger(__name__)
 def load_config(config_path: str | None = None) -> dict:
     """Load configuration from settings.json."""
     resolved: str | Path = (
-        config_path if config_path is not None else Path(__file__).parent.parent.parent / "config" / "settings.json"
+        config_path
+        if config_path is not None
+        else Path(__file__).parent.parent.parent.parent / "config" / "settings.json"
     )
     logger.info(f"Loading configuration from {resolved}")
     with open(resolved) as f:
