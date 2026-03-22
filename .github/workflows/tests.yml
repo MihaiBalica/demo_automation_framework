@@ -63,7 +63,7 @@ jobs:
         run: uv python install 3.11
 
       - name: Install dependencies
-        run: uv sync --all-groups --frozen
+        run: uv sync --all-groups
 
       - name: Install Playwright browsers
         run: uv run playwright install chromium --with-deps
@@ -102,7 +102,7 @@ jobs:
         run: uv python install 3.11
 
       - name: Install dependencies
-        run: uv sync --all-groups --frozen
+        run: uv sync --all-groups
 
       - name: Run API tests with Allure reporting
         run: uv run pytest tests/api -n auto --alluredir=allure-results
